@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+     </head>
+  <body>
+    <script>
+      function checatime()  {
+        var nometime = document.getElementById("time").value;
+
+        if (nometime == "Botafogo"){
+          alert("Certa resposta Botafago Campeão desde 1910");
+        }
+        else {
+          alert("Nome invalido a dica é Campeão desde 1910");
+        }
+      }
+    </script>
+    <p>
+      Time: <input type="text" id="time" onblur="checatime()"/>
+      <button type="button" onclick="checatime"()>Checar</button>
+
+    </p>
+
+  </body>
+</html>
+

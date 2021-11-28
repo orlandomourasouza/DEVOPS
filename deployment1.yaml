@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-dp
+  labels:
+    app: backend-app
+    type: backend
+spec:
+  template:
+    metadata:
+      name: backend-pod
+      labels :
+        app: backend-app
+        type: backend
+    spec:
+      containers:
+        - name: mysql-container
+          image: mysql
+          ports:
+          - containerPort: 3306        
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: docker
+          - name: MYSQL_USER
+            value: docker
+          - name: MYSQL_PASSWORD
+            value: docker
+          - name: MYSQL_DATABASE
+            value: wordpress 
+          securityContext:
+            privileged: true 
+          volumeMounts:
+          - mountPath: /var/www/html
+            name: volstorage 
+      volumes:
+      - name: volstorage
+        hostPath:
+          path: /root/kubernetes
+          type: DirectoryOrCreate
+  selector:
+    matchLabels:
+      type: backend
+  replicas: 1
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-svc
+spec:
+  selector:
+    type: backend
+  ports:
+    - name: mysql
+      port: 3306
+      nodePort : 30001
+  type: NodePort
+
